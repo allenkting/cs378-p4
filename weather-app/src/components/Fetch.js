@@ -15,8 +15,8 @@ const Fetch = ({lat, long}) => {
         .then((res) => {return res.json()})
         .then((data) => {
             console.log(data);
-            setTemps(data.hourly.temperature_2m.slice(0,15));
-            setTimes(data.hourly.time.slice(0,15));
+            setTemps(data.hourly.temperature_2m.reverse());
+            setTimes(data.hourly.time.reverse());
         })
         .catch((error) => {
             alert("Could not find weather for those coordinates")
