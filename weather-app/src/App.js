@@ -1,6 +1,6 @@
 import './App.css';
 import Fetch from './components/Fetch'
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // async function getLatLong(cityName) {
@@ -47,9 +47,15 @@ function App() {
   const [coords, setCoords] = useState({"latitude": initialCities[0].latitude,
   "longitude": initialCities[0].longitude});
 
-  useEffect(() => {
-    setCoords(coords);
-  }, [coords])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+  
+    const formJson = Object.fromEntries(formData.entries());
+    setCoords({"latitude": formJson["latInput"],
+    "longitude": formJson["longInput"]})
+  }
 
   return (
     <div class="container">
@@ -81,19 +87,19 @@ function App() {
         </div>
       </div>
 
-      <div class="row align-items-center text-input">
+      <form method="post" class="row align-items-center text-input" onSubmit={handleSubmit}>
         <div class="col-4 text-center">
-          <input name="latInput" class="input"/>
+          <input name="latInput" class="input" defaultValue="0"/>
         </div>
         <div class="col-4 text-center">
-          <input name="longInput" class="input"/>
+          <input name="longInput" class="input" defaultValue="0"/>
         </div>
         <div class="col">
-          <button type="button" class="but">
+          <button type="submit" class="but">
             +
           </button>
         </div>
-      </div>
+      </form>
 
       <div class="row align-items-center forecast">
         <div class="row align-items-center">
